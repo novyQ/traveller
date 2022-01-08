@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { GET_CITIES_FILTERED, TOGGLE_VISITED, TOGGLE_WISHLIST } from './graphQL'
 import { Container, InputRightElement, Input, Heading, InputGroup, IconButton, VStack } from '@chakra-ui/react'
+import { capitalizeInput } from './helper'
 import { CitySearchResult } from './CitySearchResult'
 import { Search2Icon } from '@chakra-ui/icons'
 
@@ -34,7 +35,7 @@ export const Home: FC = () => {
                 icon={<Search2Icon />}
                 onClick={() => {
                   getCities({
-                    variables: { filter: { name: inputValue } },
+                    variables: { filter: { name: capitalizeInput(inputValue) } },
                   })
                   setInputValue('')
                 }}
