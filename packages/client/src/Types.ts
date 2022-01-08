@@ -5,6 +5,7 @@ export type VisitedInputType = {
       visited: boolean
     }
   }
+  refetchQueries: any
 }
 
 export type WishlistInputType = {
@@ -14,4 +15,13 @@ export type WishlistInputType = {
       wishlist: boolean
     }
   }
+  refetchQueries: any
+}
+
+export type CityType = {
+  name: string
+  id: number
+  country: string
+  visited: boolean
+  wishlist: boolean
 }

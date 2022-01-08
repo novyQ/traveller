@@ -7,7 +7,7 @@ import { CitySearchResult } from './CitySearchResult'
 import { Search2Icon } from '@chakra-ui/icons'
 
 export const Home: FC = () => {
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState<string>('')
 
   const handleInputChange = (event: { target: { value: React.SetStateAction<string> } }) =>
     setInputValue(event.target.value)
@@ -46,6 +46,7 @@ export const Home: FC = () => {
       {data?.cities?.cities.length > 0 && (
         <CitySearchResult {...data.cities.cities[0]} toggleVisited={toggleVisited} toggleWishlist={toggleWishlist} />
       )}
+      {data?.cities?.cities.length === 0 && <Container>No search result, please try another city</Container>}
     </VStack>
   )
 }

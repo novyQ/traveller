@@ -1,23 +1,15 @@
-import React, { useState } from 'react'
 import type { ReactNode, FC } from 'react'
-import type { WishlistInputType, VisitedInputType } from './Types'
+import { GET_CITIES_FILTERED } from './graphQL'
+import type { CityType, WishlistInputType, VisitedInputType } from './Types'
 import { Container, FormControl, FormLabel, Switch } from '@chakra-ui/react'
 
-interface Props {
-  name: string
-  id: number
-  country: string
-  visited: boolean
-  wishlist: boolean
+interface Props extends CityType {
   toggleVisited: (arg: VisitedInputType) => void
   toggleWishlist: (arg: WishlistInputType) => void
   children?: ReactNode
 }
 
 export const CitySearchResult: FC<Props> = props => {
-  const [isVisited, setIsVisited] = useState<boolean>(props.visited)
-  const [isWishlist, setWishlist] = useState<boolean>(props.wishlist)
-
   return (
     <>
       <Container>{`${props.name}, ${props.country}`}</Container>
@@ -27,11 +19,11 @@ export const CitySearchResult: FC<Props> = props => {
           <Switch
             id="city-visited"
             colorScheme="green"
-            isChecked={isVisited}
+            isChecked={props.visited}
             onChange={e => {
-              setIsVisited(e.target.checked)
               props.toggleVisited({
                 variables: { input: { id: props.id, visited: e.target.checked } },
+                refetchQueries: [{ query: GET_CITIES_FILTERED, variables: { filter: { name: props.name } } }],
               })
             }}
           />
@@ -39,15 +31,15 @@ export const CitySearchResult: FC<Props> = props => {
       </Container>
       <Container width="fit-content">
         <FormControl display="flex" alignItems="center">
-          <FormLabel mb="0">In Wishlist?</FormLabel>
+          <FormLabel mb="0">In your wishlist?</FormLabel>
           <Switch
             id="city-wishlist"
             colorScheme="green"
-            isChecked={isWishlist}
+            isChecked={props.wishlist}
             onChange={e => {
-              setWishlist(e.target.checked)
               props.toggleWishlist({
                 variables: { input: { id: props.id, wishlist: e.target.checked } },
+                refetchQueries: [{ query: GET_CITIES_FILTERED, variables: { filter: { name: props.name } } }],
               })
             }}
           />
