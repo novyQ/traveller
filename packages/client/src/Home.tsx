@@ -34,10 +34,11 @@ export const Home: FC = () => {
                 aria-label=""
                 icon={<Search2Icon />}
                 onClick={() => {
-                  getCities({
-                    variables: { filter: { name: capitalizeInput(inputValue) } },
-                  })
-                  setInputValue('')
+                  inputValue &&
+                    inputValue.length > 0 &&
+                    getCities({
+                      variables: { filter: { name: capitalizeInput(inputValue) } },
+                    })
                 }}
               />
             }
